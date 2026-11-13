@@ -1,0 +1,20 @@
+{
+  "name": "研究展示评审台",
+  "focus": "项目原始评分概览",
+  "options": [
+    [
+      "track",
+      "展示分组",
+      [
+        "all",
+        "methods",
+        "applications",
+        "poster"
+      ]
+    ]
+  ],
+  "selection": {
+    "track": "all"
+  },
+  "purpose": "本地研究资料浏览与复核记录"
+}
