@@ -1,13 +1,45 @@
 <!doctype html>
 <html lang="zh-CN"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width, initial-scale=1">
 <title>研究展示评审台</title><link rel="stylesheet" href="/style.css"></head>
-<body><header><span>教研数据 · 复核工作区</span><h1>研究展示评审台</h1><p>项目原始评分概览</p></header>
+<body><header><span>教研数据 · 复核工作区</span><h1>研究展示评审台</h1><p>交叉评审的可复核综合排序与原始评分核对</p></header>
 <main><aside><h2>数据与范围</h2><label>数据版本<select id="revision"></select></label><div id="controls"></div>
-<button id="inspect">查看所选范围</button><label>导入完整数据<input id="upload" type="file" accept=".json,application/json"></label>
-<button id="raw">查看原始记录</button><h2>分析记录</h2><label>记录名称<input id="title" value="本次复核"></label>
-<button id="save">保存当前描述</button><div id="archive"></div></aside>
-<section><div id="status" role="status">正在读取本地数据…</div><div id="summary"></div>
-<h2>项目原始评分概览</h2><div id="notes"></div><canvas id="chart" width="960" height="300" aria-label="所选范围描述图"></canvas>
+<button id="inspect">按当前配置重新计算</button><label>导入完整数据<input id="upload" type="file" accept=".json,application/json"></label>
+<button id="raw">查看原始记录</button>
+<h2>主席排序配置</h2>
+<div id="frozen-banner" class="frozen" hidden>正在查看已冻结的保存材料，控件不会改变它；新计算请先返回实时视图。</div>
+<div id="weight-controls"></div>
+<label class="check"><input id="exclude-conflicts" type="checkbox" checked> 自动回避利益冲突评分</label>
+<label>候选名单长度 <input id="top-k" type="number" min="1" step="1"></label>
+<h3>额外回避（项目—评委）</h3>
+<div id="exclusion-list"></div>
+<div class="exclusion-row">
+<select id="exclude-project"></select><select id="exclude-reviewer"></select>
+<button id="add-exclusion" type="button">加入回避清单</button>
+</div>
+<div id="exclusion-errors" class="inline-error"></div>
+<h2>分析记录</h2><label>记录名称<input id="title" value="本次复核"></label>
+<button id="save">冻结保存当前排序与依据</button><div id="archive"></div></aside>
+<section><div id="status" role="status">正在读取本地数据…</div>
+<div id="frozen-view" class="frozen" hidden>本材料为保存时的冻结快照，后补评语、新权重或新导入数据都不会改变它。</div>
+<div id="summary"></div>
+<h2>综合排序（严宽校准 · 可复核）</h2>
+<div id="ranking-notes" class="notes"></div>
+<div id="component-banner"></div>
+<div class="table-wrap"><table id="ranking-table"><thead id="ranking-columns"></thead><tbody id="ranking-rows"></tbody></table></div>
+<h3>排序口径与稳定性说明</h3><div id="method-notes" class="notes"></div>
+<h2>情景对照与候选名单稳定性</h2>
+<div class="scenario-bar">
+<button id="snapshot" type="button">把当前结果存为对照情景</button>
+<button id="return-live" type="button" hidden>返回实时视图</button>
+<span id="scenario-caption" class="hint">尚未保存对照情景。调整权重或回避后重新计算，可与快照逐行比较名次变化。</span>
+</div>
+<div class="table-wrap"><table id="scenario-table"><thead id="scenario-columns"></thead><tbody id="scenario-rows"></tbody></table></div>
+<h2>评委严宽与标准贡献</h2>
+<div class="two-col">
+<div><h3>评委效应（组内均值为零）</h3><div class="table-wrap"><table id="reviewer-table"><thead id="reviewer-columns"></thead><tbody id="reviewer-rows"></tbody></table></div></div>
+<div><h3>评分标准</h3><div class="table-wrap"><table id="criteria-table"><thead id="criteria-columns"></thead><tbody id="criteria-rows"></tbody></table></div></div>
+</div>
+<h2>项目原始评分概览（描述用，不做名次）</h2><div id="notes"></div><canvas id="chart" width="960" height="300" aria-label="所选范围描述图"></canvas>
 <div class="table-wrap"><table><thead id="columns"></thead><tbody id="rows"></tbody></table></div>
 <h2 id="detail-heading">记录与依据</h2><pre id="details">点击记录行可查看详细字段。</pre><button id="export">导出当前记录</button>
-</section></main><footer>仅使用本地虚构记录；描述统计不替代研究设计与业务复核。</footer><script src="/app.js"></script></body></html>
+</section></main><footer>仅使用本地虚构记录；描述统计与校准模型不替代研究设计与业务复核。</footer><script src="/app.js"></script></body></html>

@@ -2,6 +2,7 @@ from pathlib import Path
 import json
 
 from .domain import explore, validate
+from .ranking import normalize_config, rank
 from .storage import Store, fingerprint
 
 
@@ -32,8 +33,12 @@ class Workbench:
         if not isinstance(selection, dict):
             raise ValueError("选择条件必须是对象")
         data = self.store.dataset(revision)
+        ranking_config = normalize_config(data, body.get("ranking_config"))
         result = explore(data, selection)
-        return {"revision": revision, "selection": selection, "data_sha256": fingerprint(data), "view": result}
+        ranking_view = rank(data, selection, ranking_config)
+        return {"revision": revision, "selection": selection,
+                "ranking_config": ranking_config, "data_sha256": fingerprint(data),
+                "view": result, "ranking": ranking_view}
 
     def save(self, body):
         result = self.inspect(body)

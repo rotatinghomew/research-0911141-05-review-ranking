@@ -10,4 +10,8 @@ rubric 定义每项满分和默认权重。status=scored、abstain、invalid 分
 
 ## 目录
 
-`review_ranking/domain.py` 提供现行领域校验和描述，`validation.py` 处理基础引用与数值校验，`service.py` 连接领域操作和材料存档，`storage.py` 负责内容寻址数据与历史记录，`server.py` 提供本地接口。`web/app.js` 使用接口构建交互页面，不自行推导独立口径。
+`review_ranking/domain.py` 提供现行领域校验和描述，`review_ranking/ranking.py` 提供可复核的综合排序（连通组、严宽校准、稳定性，口径见 `docs/ranking.md`），`validation.py` 处理基础引用与数值校验，`service.py` 连接领域操作和材料存档，`storage.py` 负责内容寻址数据与历史记录，`server.py` 提供本地接口。`web/app.js` 使用接口构建交互页面，不自行推导独立口径。
+
+## 评分状态与回避
+
+`scored`、`abstain`、`invalid` 三类状态在排序中严格区分：只有 `scored` 进入校准模型，弃权与无效单列计数，缺记录不填零。利益冲突默认回避，主席可再追加手动回避；被回避的评分不参与模型但原始行保留。排序结果连同权重和回避清单一起冻结进保存材料，后续任何导入、权重调整或评语补充都不会覆盖它。
