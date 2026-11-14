@@ -1,0 +1,9 @@
+{
+  "name": "review-ranking",
+  "version": "0.3.0",
+  "private": true,
+  "scripts": {
+    "start": "python3 -m review_ranking",
+    "test:browser": "python3 tests/browser_smoke.py"
+  }
+}
